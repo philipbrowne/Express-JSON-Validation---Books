@@ -38,6 +38,10 @@ describe('Test Book class', () => {
         },
       ],
     });
+    const books = response.body.books;
+    expect(books).toHaveLength(1);
+    expect(books[0]).toHaveProperty('isbn');
+    expect(books[0]).toHaveProperty('amazon_url');
   });
   test('can get one book', async () => {
     let response = await request(app).get('/books/0691161518');
@@ -92,6 +96,7 @@ describe('Test Book class', () => {
         year: 2003,
       },
     });
+    expect(response.body.book).toHaveProperty('isbn');
   });
   test('returns error with incomplete request', async () => {
     let res1 = await await request(app).post('/books').send({
