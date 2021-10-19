@@ -2,6 +2,7 @@ const express = require('express');
 const Book = require('../models/book');
 const jsonschema = require('jsonschema');
 const bookSchema = require('../schemas/bookSchema.json');
+const bookSchemaUpdate = require('../schemas/bookSchemaUpdate.json');
 const ExpressError = require('../expressError');
 
 const router = new express.Router();
@@ -50,7 +51,7 @@ router.post('/', async function (req, res, next) {
 
 router.put('/:isbn', async function (req, res, next) {
   try {
-    const result = jsonschema.validate(req.body, bookSchema);
+    const result = jsonschema.validate(req.body, bookSchemaUpdate);
     if (!result.valid) {
       // pass validation errors to error handler
       let listOfErrors = result.errors.map((err) => err.stack);
